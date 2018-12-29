@@ -1,8 +1,10 @@
 {
   "presets": [
-    "env",
-    "react",
+    "@babel/preset-env",
+    "@babel/preset-react",
     "survivejs-kanban"
   ],
-  "plugins": ["react-hot-loader/babel"]
+  "plugins": [
+    "react-hot-loader/babel"
+  ]
 }
