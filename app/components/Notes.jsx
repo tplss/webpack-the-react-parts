@@ -26,6 +26,9 @@ const Notes = ({ notes, move, onValueClick, onEdit, onDelete }) => (
   </ul>
 );
 
-export default connect(() => ({}), {
-  move,
-})(Notes);
+export default connect(
+  () => ({}),
+  {
+    move,
+  }
+)(Notes);

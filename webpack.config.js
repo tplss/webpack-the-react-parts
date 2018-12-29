@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const merge = require("webpack-merge");
 const webpack = require("webpack");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const WebpackMonitor = require("webpack-monitor");
 
 const pkg = require("./package.json");
@@ -25,8 +25,10 @@ const commonConfig = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        use: "babel-loader",
-        include: PATHS.app,
+        loader: "@sucrase/webpack-loader",
+        options: {
+          transforms: ["jsx"],
+        },
       },
     ],
   },
@@ -85,19 +87,16 @@ const productionConfig = {
       // Extract CSS during build
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader",
-        }),
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
         include: PATHS.app,
       },
     ],
   },
   plugins: [
     // Output extracted CSS to a file
-    new ExtractTextPlugin({
-      filename: "styles.[contenthash].css",
-      allChunks: true,
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css",
     }),
   ],
 };
